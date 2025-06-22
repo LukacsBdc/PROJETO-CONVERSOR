@@ -150,7 +150,7 @@ h1 {
 }
 
 /* 🔥 Responsivo */
-@media (max-width: 480px) {
+@media (max-width: 300px) {
   .container {
     padding: 1.5rem;
   }
