@@ -1,6 +1,7 @@
 /* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+/* RESET GLOBAL */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,33 +16,29 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-.header-logo {
-  margin: 20px 0;
-}
-
-.header-logo img {
-  width: 100px;
-  height: auto;
-}
-
+/* CONTAINER CENTRAL */
 .container {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
-  padding: 2rem 2.5rem;
+  padding: 2rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  width: 90%;
+  width: 95%;
   max-width: 450px;
 }
 
+/* TITULO */
 h1 {
   text-align: center;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: #2575fc;
+  font-size: 1.8rem;
 }
 
+/* INPUT */
 .input-currency {
   width: 100%;
   padding: 0.7rem 1rem;
@@ -57,21 +54,21 @@ h1 {
   outline: none;
 }
 
+/* SELECT E BOTÃO DE INVERTER */
 .select-group {
   display: flex;
   gap: 10px;
-  align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .select-group select {
-  flex: 1 1 45%;
+  flex: 1 1 40%;
   padding: 0.7rem 1rem;
   border: 2px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
   min-width: 120px;
 }
 
@@ -80,6 +77,7 @@ h1 {
   outline: none;
 }
 
+/* BOTÃO INVERTER */
 .invert-button {
   background-color: transparent;
   border: none;
@@ -98,6 +96,7 @@ h1 {
   transform: rotate(180deg);
 }
 
+/* ÁREA DAS BANDEIRAS */
 .currency-display {
   display: flex;
   align-items: center;
@@ -119,6 +118,7 @@ h1 {
   font-size: 24px;
 }
 
+/* BOTÃO CONVERTER */
 .convert-button {
   width: 100%;
   background-color: #2575fc;
@@ -136,6 +136,7 @@ h1 {
   background-color: #1b54c8;
 }
 
+/* RESULTADOS */
 .results {
   margin-top: 20px;
   text-align: center;
@@ -149,27 +150,41 @@ h1 {
   color: #333;
 }
 
-/* 🔥 Responsivo */
-@media (max-width: 300px) {
-  .container {
-    padding: 1.5rem;
+/* HEADER */
+.header-logo {
+  margin: 20px 0;
+}
+
+.header-logo img {
+  width: 100px;
+  height: auto;
+}
+
+/* 🔥 MEDIA QUERIES - RESPONSIVO */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.4rem;
   }
 
-  h1 {
+  .select-group {
+    gap: 8px;
+  }
+
+  .select-group select {
+    flex: 1 1 100%;
+  }
+
+  .invert-button {
     font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
   }
 
   .currency-display img {
     width: 35px;
   }
 
-  .invert-button {
-    font-size: 1.4rem;
-    width: 40px;
-    height: 40px;
-  }
-
-  .header-logo img {
-    width: 80px;
+  .container {
+    padding: 1.5rem;
   }
 }
