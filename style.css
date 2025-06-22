@@ -116,12 +116,30 @@ h1 {
   background-color: #1b54c8;
 }
 
+.invert-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  /* Tamanho maior do ícone */
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.invert-button:hover {
+  transform: rotate(180deg);
+}
+
 .results {
   margin-top: 20px;
   text-align: center;
 }
 
-.currency-value-to-convert, .currency-value {
+.currency-value-to-convert,
+.currency-value {
   font-size: 1.6rem;
   font-weight: 600;
   margin-top: 0.3rem;
