@@ -11,6 +11,27 @@ const toCurrencyName = document.getElementById('to-currency-name');
 const fromCurrencyImg = document.querySelector('.from-currency-img');
 const toCurrencyImg = document.querySelector('.to-currency-img');
 
+function atualizarRelogio() {
+    const agora = new Date();
+
+    const dia = agora.getDate().toString().padStart(2, '0');
+    const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+    const ano = agora.getFullYear();
+
+    const horas = agora.getHours().toString().padStart(2, '0');
+    const minutos = agora.getMinutes().toString().padStart(2, '0');
+    const segundos = agora.getSeconds().toString().padStart(2, '0');
+
+    const dataHoraFormatada = `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+
+    document.getElementById('relogio').textContent = dataHoraFormatada;
+}
+
+setInterval(atualizarRelogio, 1000);
+atualizarRelogio();
+
+
+
 const currencyDetails = {
   real: { name: "Real Brasileiro", img: "./assets/real.png", alt: "Bandeira do Brasil", code: "BRL", locale: "pt-BR", type: "fiat" },
   dolar: { name: "Dólar Americano", img: "./assets/dollar.png", alt: "Bandeira dos EUA", code: "USD", locale: "en-US", type: "fiat" },

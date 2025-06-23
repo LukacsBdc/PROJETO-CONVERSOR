@@ -160,6 +160,55 @@ h1 {
   height: auto;
 }
 
+footer {
+  background-color: #6a11cb;
+  color: #000a08;
+  border: none;
+  opacity: 0.6;
+  padding: 20px;
+  text-align: center;
+}
+
+footer a {
+  color: #ccc;
+  text-decoration: none;
+  margin: 0 10px;
+  height: 10px;
+}
+
+footer a:hover {
+  color: white;
+  text-decoration: underline;
+  height: 10px;
+}
+
+#relogio {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #000a08;
+    background-color: 6a11cb;
+    padding: 5px 12px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+#contador {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #000a08;
+    background-color: 6a11cb;
+    padding: 5px 12px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+
 /* 🔥 MEDIA QUERIES - RESPONSIVO */
 @media (max-width: 480px) {
   h1 {
