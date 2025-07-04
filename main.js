@@ -12,25 +12,20 @@ const fromCurrencyImg = document.querySelector('.from-currency-img');
 const toCurrencyImg = document.querySelector('.to-currency-img');
 
 function atualizarRelogio() {
-    const agora = new Date();
+  const agora = new Date();
+  const dia = agora.getDate().toString().padStart(2, '0');
+  const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+  const ano = agora.getFullYear();
+  const horas = agora.getHours().toString().padStart(2, '0');
+  const minutos = agora.getMinutes().toString().padStart(2, '0');
+  const segundos = agora.getSeconds().toString().padStart(2, '0');
 
-    const dia = agora.getDate().toString().padStart(2, '0');
-    const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
-    const ano = agora.getFullYear();
-
-    const horas = agora.getHours().toString().padStart(2, '0');
-    const minutos = agora.getMinutes().toString().padStart(2, '0');
-    const segundos = agora.getSeconds().toString().padStart(2, '0');
-
-    const dataHoraFormatada = `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
-
-    document.getElementById('relogio').textContent = dataHoraFormatada;
+  const dataHoraFormatada = `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+  document.getElementById('relogio').textContent = dataHoraFormatada;
 }
 
 setInterval(atualizarRelogio, 1000);
 atualizarRelogio();
-
-
 
 const currencyDetails = {
   real: { name: "Real Brasileiro", img: "./assets/real.png", alt: "Bandeira do Brasil", code: "BRL", locale: "pt-BR", type: "fiat" },
@@ -43,7 +38,7 @@ const currencyDetails = {
 let exchangeRates = null;
 let bitcoinPriceBRL = null;
 
-// 🔄 Função inverter moedas
+// 🔄 Inverter moedas
 invertButton.addEventListener('click', () => {
   const temp = currencyFrom.value;
   currencyFrom.value = currencyTo.value;
@@ -51,7 +46,7 @@ invertButton.addEventListener('click', () => {
   atualizarTextoEBandeira();
 });
 
-// 🏳️ Atualiza os nomes e imagens
+// 🏳️ Atualiza textos e imagens
 function atualizarTextoEBandeira() {
   const from = currencyFrom.value;
   const to = currencyTo.value;
@@ -66,21 +61,20 @@ function atualizarTextoEBandeira() {
   toCurrencyImg.alt = currencyDetails[to].alt;
 }
 
-// 📈 Buscar taxas fiat (real, dólar, euro, libra)
+// 📈 Buscar taxas fiat (BRL ↔ USD, EUR, GBP)
 async function fetchFiatRates() {
-  const apiKey = "a1c642bbad1c589bb45c8cf1"; // Use sua chave válida
-  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/BRL`;
-
   try {
-    const response = await fetch(url);
+    const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,GBP-BRL');
     const data = await response.json();
-    if (data.result === "success") {
-      exchangeRates = data.conversion_rates;
-    } else {
-      console.error("Erro API fiat:", data["error-type"]);
-    }
+
+    exchangeRates = {
+      USD: 1 / parseFloat(data.USDBRL.bid),
+      EUR: 1 / parseFloat(data.EURBRL.bid),
+      GBP: 1 / parseFloat(data.GBPBRL.bid),
+      BRL: 1
+    };
   } catch (error) {
-    console.error("Erro fetch fiat:", error);
+    console.error("Erro ao buscar taxas na AwesomeAPI:", error);
   }
 }
 
@@ -93,16 +87,16 @@ async function fetchBitcoinPrice() {
     const data = await response.json();
     bitcoinPriceBRL = data.bitcoin.brl;
   } catch (error) {
-    console.error("Erro fetch BTC:", error);
+    console.error("Erro ao buscar preço do Bitcoin:", error);
   }
 }
 
-// 🔄 Atualiza as taxas de câmbio
+// 🔁 Atualiza as taxas
 async function updateRates() {
   await Promise.all([fetchFiatRates(), fetchBitcoinPrice()]);
 }
 
-// 💵 Formatar moeda
+// 💵 Formata o valor
 function formatCurrency(value, currencyKey) {
   const details = currencyDetails[currencyKey];
   if (details.type === "crypto") {
@@ -115,7 +109,7 @@ function formatCurrency(value, currencyKey) {
   }
 }
 
-// 🔢 Converter valores
+// 🔢 Conversão de moedas
 async function convertValues() {
   const inputCurrencyValue = parseFloat(document.querySelector('.input-currency').value);
 
@@ -149,17 +143,16 @@ async function convertValues() {
     convertedValue = valueInBRL / bitcoinPriceBRL;
   }
 
-  // Atualiza os resultados na tela
+  // Atualiza resultados
   currencyValueToConvert.innerHTML = formatCurrency(inputCurrencyValue, from);
   currencyValueConverted.innerHTML = formatCurrency(convertedValue, to);
 
-  // Atualiza textos e imagens
   atualizarTextoEBandeira();
 }
 
-// ▶️ Executa na inicialização
+// ▶️ Inicializa
 updateRates();
-setInterval(updateRates, 60000); // Atualiza taxas a cada 1 min
+setInterval(updateRates, 60000); // Atualiza taxas a cada 60s
 
 convertButton.addEventListener("click", convertValues);
 currencyFrom.addEventListener("change", atualizarTextoEBandeira);
